@@ -1,14 +1,14 @@
 {
   "variables": {
     "platform": "centos",
-    "platform_version": "7.1",
+    "platform_version": "7.3",
     "arch": "x86_64",
     "iso_url": "",
     "iso_path": "",
-    "iso_name": "CentOS-7-x86_64-DVD-1503-01.iso",
-    "checksum": "1795184136b8bdddabe50453cc2cc2d46f0f7c5e",
-    "checksum_type": "sha1",
-    "release": "{{timestamp}}",
+    "iso_name": "CentOS-7-x86_64-DVD-1611.iso",
+    "checksum": "c455ee948e872ad2194bdddd39045b83634e8613249182b88f549bb2319d97eb",
+    "checksum_type": "sha256",
+    "box_version": "isotime "200601020304"",
     "ks": "ks.cfg",
     "disk_size": "8192",
     "memsize": "1024",
@@ -17,12 +17,9 @@
     "update": "true",
     "build_dir": "builds",
     "http_directory": "lib/http",
-    "cm_tool": "",
-    "cm_version": "",
     "install_vagrant_key": "true",
     "ssh_password": "vagrant",
-    "ssh_username": "vagrant",
-    "unvagrant": "FALSE"
+    "ssh_username": "vagrant"
   },
 
   "builders": [
@@ -30,7 +27,7 @@
     {
       "type": "virtualbox-iso",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `platform`}}-{{user `platform_version`}}/{{user `ks`}}<enter><wait>"
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `platform`}}_{{user `platform_version`}}/{{user `ks`}}<enter><wait>"
       ],
       "boot_wait": "10s",
       "disk_size": "{{user `disk_size`}}",
@@ -64,10 +61,7 @@
     {
       "type": "shell",
       "environment_vars": [
-        "REMOVE_VAGRANT={{user `unvagrant`}}",
         "PACKER_ARTIFACT={{user `platform`}}-{{user `platform_version`}}-{{user `arch`}}-{{user `release`}}",
-        "CM_TOOL={{user `cm_tool`}}",
-        "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}",
         "INSTALL_VAGRANT_KEY={{user `install_vagrant_key`}}",
         "SSH_USERNAME={{user `ssh_username`}}",
@@ -75,12 +69,9 @@
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
-        "lib/script/sshd.sh",
         "lib/script/update.sh",
         "lib/script/vmtools.sh",
         "lib/script/vagrant.sh",
-        "lib/script/cmtool.sh",
-        "lib/script/unvagrant.sh",
         "lib/script/cleanup.sh"
       ]
     }

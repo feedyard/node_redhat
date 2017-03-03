@@ -6,7 +6,7 @@ ORG = 'org'
 # Local and remote path for ISO images. Start with local and only pull
 # remote if local not found.
 
-ISO_PATH = '/Users/ncheneweth/Documents/dev/isos'
+ISO_PATH = '/Users/ncheneweth/github/iso'
 ISO_URL = ''
 
 # CM tool
