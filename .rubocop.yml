@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - Guardfile
+    - vendor/**/*
+    - Vagrantfile
+Metrics/AbcSize:
+  Enabled: false
+Style/SpecialGlobalVars:
+  Enabled: false

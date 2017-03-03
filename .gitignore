@@ -1,0 +1,6 @@
+packer_cache/
+builds/
+.vagrant/
+.kitchen/
+
+rake.local
