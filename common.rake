@@ -1,20 +1,17 @@
 # urls and other configurable items
 
 # Organizational ID for test or tmp naming
-ORG = 'org'
+ORG = 'feedyard'
 
 # Local and remote path for ISO images. Start with local and only pull
 # remote if local not found.
 
-ISO_PATH = '/Users/ncheneweth/github/iso'
+ISO_PATH = '../../iso'
 ISO_URL = ''
 
 # CM tool
 CM_TOOL = ''
 CM_VERSION = ''
 
-# copy the following artifact location values to a file named rake.local
-# ARTIFACT_REPO = ''
-# ARTIFACT_URL = ''
-# ARTIFACT_USERNAME = ''
-# ARTIFACT_PASSWORD = ''
+# place secure setting in rake.local
+# ATLAS_TOKEN = ''

@@ -8,7 +8,7 @@
     "iso_name": "CentOS-7-x86_64-DVD-1611.iso",
     "checksum": "c455ee948e872ad2194bdddd39045b83634e8613249182b88f549bb2319d97eb",
     "checksum_type": "sha256",
-    "box_version": "isotime "200601020304"",
+    "box_version": "{{timestamp}}",
     "ks": "ks.cfg",
     "disk_size": "8192",
     "memsize": "1024",
@@ -19,7 +19,9 @@
     "http_directory": "lib/http",
     "install_vagrant_key": "true",
     "ssh_password": "vagrant",
-    "ssh_username": "vagrant"
+    "ssh_username": "vagrant",
+    "org": "",
+    "atlas_token": ""
   },
 
   "builders": [
@@ -27,19 +29,18 @@
     {
       "type": "virtualbox-iso",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `platform`}}_{{user `platform_version`}}/{{user `ks`}}<enter><wait>"
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{ user `platform` }}_{{ user `platform_version` }}/{{ user `ks` }}<enter><wait>"
       ],
       "boot_wait": "10s",
-      "disk_size": "{{user `disk_size`}}",
-      "guest_os_type": "{{user `guest_os_type`}}",
-      "http_directory": "{{user `http_directory`}}",
-      "iso_checksum": "{{user `checksum`}}",
-      "iso_checksum_type": "{{user `checksum_type`}}",
+      "disk_size": "{{ user `disk_size` }}",
+      "http_directory": "{{ user `http_directory` }}",
+      "iso_checksum": "{{ user `checksum` }}",
+      "iso_checksum_type": "{{ user `checksum_type` }}",
       "iso_urls": [
         "{{ user `iso_path` }}/{{ user `iso_name` }}",
         "{{ user `iso_url` }}/{{ user `iso_name` }}"
       ],
-      "output_directory": "{{user `build_dir`}}/{{user `platform`}}-{{user `platform_version`}}-{{user `arch`}}-{{user `release`}}.vbox",
+      "output_directory": "{{ user `build_dir` }}/{{ user `platform` }}-{{ user `platform_version` }}-{{ user `arch` }}-{{ user `box_version` }}.vbox",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -h now",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_username": "{{ user `ssh_username` }}",
@@ -48,12 +49,12 @@
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "RedHat_64",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "{{user `memsize`}}" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "{{user `numvcpus`}}" ]
+        [ "modifyvm", "{{.Name}}", "--memory", "{{ user `memsize` }}" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "{{ user `numvcpus` }}" ]
       ],
       "virtualbox_version_file": ".vbox_version",
-      "headless": "{{user `headless`}}",
-      "vm_name": "{{user `platform`}}-{{user `platform_version`}}-{{user `arch`}}-{{user `release`}}"
+      "headless": "{{ user `headless` }}",
+      "vm_name": "{{ user `platform` }}-{{ user `platform_version` }}-{{ user `arch` }}-{{ user `release` }}"
     }
   ],
 
@@ -61,11 +62,11 @@
     {
       "type": "shell",
       "environment_vars": [
-        "PACKER_ARTIFACT={{user `platform`}}-{{user `platform_version`}}-{{user `arch`}}-{{user `release`}}",
-        "UPDATE={{user `update`}}",
-        "INSTALL_VAGRANT_KEY={{user `install_vagrant_key`}}",
-        "SSH_USERNAME={{user `ssh_username`}}",
-        "SSH_PASSWORD={{user `ssh_password`}}"
+        "PACKER_ARTIFACT={{ user `platform` }}-{{ user `platform_version` }}-{{ user `arch` }}-{{ user `release` }}",
+        "UPDATE={{ user `update` }}",
+        "INSTALL_VAGRANT_KEY={{ user `install_vagrant_key` }}",
+        "SSH_USERNAME={{ user `ssh_username` }}",
+        "SSH_PASSWORD={{ user `ssh_password` }}"
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
@@ -81,7 +82,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "{{user `build_dir`}}/{{user `platform`}}-{{user `platform_version`}}-{{user `arch`}}-{{user `release`}}.{{.Provider}}.box"
+      "output": "{{ user `build_dir` }}/{{ user `platform` }}-{{ user `platform_version` }}-{{ user `arch` }}-{{ user `release` }}.{{.Provider}}.box"
     }
   ]
 }
